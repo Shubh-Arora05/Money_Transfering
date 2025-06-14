@@ -18,7 +18,7 @@ const signUpBody = zod.object({
 
 router.post("/signUp",  async (req, res) => {
   const { success } = signUpBody.safeParse(req.body);
-  console.log(success)  ;
+  //console.log(success)  ;
   if (!success) {
     return res.status(411).json({
       message: "zod fails / Incorrect inputs",
@@ -29,7 +29,7 @@ router.post("/signUp",  async (req, res) => {
   const check = await User.findOne({
     username: req.body.username,
   });
-  console.log("check" ,check) ;
+  //console.log("check" ,check) ;
 
   if (check) {
     return res.status(411).json({
@@ -50,8 +50,8 @@ router.post("/signUp",  async (req, res) => {
     balance : 1 + Math.random()*10000 ,
   })
 
-  // console.log("userid" , userId) ;
-  // console.log("balance" , account) ;
+  // //console.log("userid" , userId) ;
+  // //console.log("balance" , account) ;
   const token = jwt.sign({ userId }, jwt_secret);
   res.status(200).json({ msg: "User created Successfully", token: token });
 });

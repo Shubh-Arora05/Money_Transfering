@@ -11,7 +11,7 @@ router.get("/balance", authorization, async (req, res) => {
   const user = await Account.findOne({ userId });
   // const user_data = await User.findOne({ userId }) ;
   // const
-  console.log(user);
+  //console.log(user);
 
   res.status(201).json({ balance: user.balance });
 });
@@ -54,7 +54,7 @@ router.post("/transfer", authorization, async (req, res) => {
     const account = await Account.findOne({ userId: req.userId }).session(
       session
     );
-    console.log(req.userId) ;
+    //console.log(req.userId) ;
     if (!account || account.balance < amount) {
       await session.abortTransaction();
       return res.status(400).json({ message: "Insufficient balance" });
@@ -63,11 +63,11 @@ router.post("/transfer", authorization, async (req, res) => {
     
 
     // Fetch recipient account
-    console.log(to) ;
+    //console.log(to) ;
     const toAccount = await Account.find({userId : to }).session(session);
 
     if (!toAccount) {
-        console.log(toAccount) ;
+        //console.log(toAccount) ;
       await session.abortTransaction();
       return res.status(400).json({ message: "Recipient account not found" });
     }
@@ -91,7 +91,7 @@ router.post("/transfer", authorization, async (req, res) => {
     return res.status(201).json({ message: "Transfer successful" });
   } catch (error) {
     await session.abortTransaction();
-    console.error("Transfer failed:", error);
+    //console.error("Transfer failed:", error);
     return res
       .status(500)
       .json({ message: "Transfer failed, please try again later." });
